@@ -52,3 +52,11 @@ class MutInt:
             return self.value < other
         else:
             return NotImplemented
+
+    def __int__(self):
+        return self.value
+
+    __index__ = __int__
+
+    def __float__(self):
+        return float(self.value)
