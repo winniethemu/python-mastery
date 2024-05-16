@@ -1,3 +1,7 @@
+from functools import total_ordering
+
+
+@total_ordering
 class MutInt:
     __slots__ = ['value']
 
@@ -30,5 +34,21 @@ class MutInt:
         elif isinstance(other, int):
             self.value += other
             return self
+        else:
+            return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, MutInt):
+            return self.value == other.value
+        elif isinstance(other, int):
+            return self.value == other
+        else:
+            return NotImplemented
+
+    def __lt__(self, other):
+        if isinstance(other, MutInt):
+            return self.value < other.value
+        elif isinstance(other, int):
+            return self.value < other
         else:
             return NotImplemented
