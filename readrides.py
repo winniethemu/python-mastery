@@ -28,11 +28,24 @@ class RideData(abc.Sequence):
         raise ValueError('inconsistent column lengths')
 
     def __getitem__(self, index):
-        return {
+        if isinstance(index, int):
+            return {
                 'route': self.routes[index],
                 'date': self.dates[index],
                 'daytype': self.daytypes[index],
                 'rides': self.numrides[index]}
+        elif isinstance(index, slice):
+            tuples = list(zip(self.routes, self.dates,
+                          self.daytypes, self.numrides))
+            records = [
+                dict(
+                    route=route,
+                    date=date,
+                    daytype=daytype,
+                    rides=numrides) for route, date, daytype, numrides in tuples]
+            return records[index]
+        else:
+            raise TypeError('index must be int or slice')
 
     def append(self, d):
         self.routes.append(d['route'])
