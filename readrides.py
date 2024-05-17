@@ -50,12 +50,32 @@ def read_rides(filename, helper):
     records = []
     with open(filename) as f:
         rows = csv.reader(f)
-        headings = next(rows)
+        next(rows)
         for row in rows:
             route, date, daytype, rides = row
             record = helper(route, date, daytype, rides)
             records.append(record)
     return records
+
+
+def read_rides_as_columns(filename):
+    '''
+    Read the bus ride data into 4 lists, representing columns
+    '''
+    routes = []
+    dates = []
+    daytypes = []
+    numrides = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        next(rows)
+        for row in rows:
+            routes.append(row[0])
+            dates.append(row[1])
+            daytypes.append(row[2])
+            numrides.append(row[3])
+    return dict(routes=routes, dates=dates, daytypes=daytypes,
+                numrides=numrides)
 
 
 if __name__ == '__main__':
