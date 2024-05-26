@@ -6,3 +6,7 @@ class Stock:
 
     def cost(self):
         return self.shares * self.price
+
+    def sell(self, nshares):
+        if nshares <= self.shares:
+            self.shares -= nshares
