@@ -1,3 +1,11 @@
+import readport
+
+
+def read_portfolio(filename):
+    portfolio = readport.read_portfolio(filename)
+    return [Stock(s['name'], s['shares'], s['price']) for s in portfolio]
+
+
 class Stock:
     def __init__(self, name, shares, price):
         self.name = name
