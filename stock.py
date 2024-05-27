@@ -1,4 +1,5 @@
 import readport
+from decimal import Decimal
 
 
 def read_portfolio(filename):
@@ -38,3 +39,7 @@ class Stock:
     def from_row(cls, row):
         values = [func(val) for func, val in zip(cls.types, row)]
         return cls(*values)
+
+
+class DecimalStock(Stock):
+    types = (str, int, Decimal)
