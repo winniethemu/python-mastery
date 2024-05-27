@@ -20,6 +20,8 @@ def print_portfolio(portfolio, show_header=True):
 
 
 class Stock:
+    types = (str, int, float)
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
@@ -31,3 +33,8 @@ class Stock:
     def sell(self, nshares):
         if nshares <= self.shares:
             self.shares -= nshares
+
+    @classmethod
+    def from_row(cls, row):
+        values = [func(val) for func, val in zip(cls.types, row)]
+        return cls(*values)
