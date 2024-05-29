@@ -4,6 +4,7 @@ from decimal import Decimal
 
 class Stock:
     _types = (str, int, float)
+    __slots__ = ('_shares', '_price', 'name')
 
     def __init__(self, name, shares, price):
         self.name = name
