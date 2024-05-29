@@ -11,6 +11,26 @@ class Stock:
         self.price = price
 
     @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if value < 0:
+            raise ValueError('Shares must be positive')
+        self._shares = value
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        if value < 0 or not isinstance(value, float):
+            raise ValueError('Price must be a positive float')
+        self._price = value
+
+    @property
     def cost(self):
         return self.shares * self.price
 
