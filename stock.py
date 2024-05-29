@@ -4,7 +4,7 @@ from decimal import Decimal
 
 class Stock:
     _types = (str, int, float)
-    __slots__ = ('_shares', '_price', 'name')
+    __slots__ = ('name', '_shares', '_price')
 
     def __init__(self, name, shares, price):
         self.name = name
@@ -17,8 +17,9 @@ class Stock:
 
     @shares.setter
     def shares(self, value):
-        if value < 0:
-            raise ValueError('Shares must be positive')
+        if value < 0 or not isinstance(value, self._types[1]):
+            raise ValueError(
+                    f'Shares must be a positive {self._types[1].__name__}')
         self._shares = value
 
     @property
@@ -27,8 +28,9 @@ class Stock:
 
     @price.setter
     def price(self, value):
-        if value < 0 or not isinstance(value, float):
-            raise ValueError('Price must be a positive float')
+        if value < 0 or not isinstance(value, self._types[2]):
+            raise ValueError(
+                    f'Price must be a positive {self._types[2].__name__}')
         self._price = value
 
     @property
