@@ -4,18 +4,6 @@ def print_table(records, attributes, formatter):
         row_data = [getattr(record, attribute) for attribute in attributes]
         formatter.row(row_data)
 
-    # column_width = 10
-    # header = ' '.join([f'%{column_width}s' %
-    #                   attribute for attribute in attributes])
-    # divider = ('-' * column_width + ' ') * len(attributes)
-    # print(header)
-    # print(divider)
-
-    # for record in records:
-    #     row = ' '.join([f'%{column_width}s' % getattr(
-    #         record, attribute) for attribute in attributes])
-    #     print(row)
-
 
 class TableFormatter:
     def headings(self, headers):
@@ -23,3 +11,18 @@ class TableFormatter:
 
     def row(self, row_data):
         raise NotImplementedError()
+
+
+class TextTableFormatter(TableFormatter):
+    def __init__(self, column_width=10):
+        self.column_width = column_width
+
+    def headings(self, headers):
+        header = ' '.join([f'%{self.column_width}s' %
+                           header for header in headers])
+        divider = ('-' * self.column_width + ' ') * len(headers)
+        print(header)
+        print(divider)
+
+    def row(self, row_data):
+        print(' '.join([f'%{self.column_width}s' % d for d in row_data]))
