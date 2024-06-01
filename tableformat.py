@@ -50,3 +50,12 @@ class HTMLTableFormatter(TableFormatter):
     @staticmethod
     def wrap(content, tag):
         return f'<{tag}>{content}</{tag}>'
+
+
+def create_formatter(type: str):
+    format = {
+        'html': HTMLTableFormatter,
+        'text': TextTableFormatter,
+        'csv': CSVTableFormatter,
+    }
+    return format[type]()
