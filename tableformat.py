@@ -15,6 +15,7 @@ class TableFormatter:
 
 class TextTableFormatter(TableFormatter):
     def __init__(self, column_width=10):
+        super().__init__()
         self.column_width = column_width
 
     def headings(self, headers):
@@ -26,3 +27,26 @@ class TextTableFormatter(TableFormatter):
 
     def row(self, row_data):
         print(' '.join([f'%{self.column_width}s' % d for d in row_data]))
+
+
+class CSVTableFormatter(TableFormatter):
+    def headings(self, headers):
+        print(','.join([header for header in headers]))
+
+    def row(self, row_data):
+        print(','.join(str(d) for d in row_data))
+
+
+class HTMLTableFormatter(TableFormatter):
+    def headings(self, headers):
+        inner = ''.join((HTMLTableFormatter.wrap(header, 'th')
+                        for header in headers))
+        print(HTMLTableFormatter.wrap(inner, 'tr'))
+
+    def row(self, row_data):
+        inner = ''.join(HTMLTableFormatter.wrap(d, 'td') for d in row_data)
+        print(HTMLTableFormatter.wrap(inner, 'tr'))
+
+    @staticmethod
+    def wrap(content, tag):
+        return f'<{tag}>{content}</{tag}>'
