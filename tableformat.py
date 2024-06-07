@@ -1,10 +1,13 @@
 import sys
+from abc import ABC, abstractmethod
 
 
-class TableFormatter:
+class TableFormatter(ABC):
+    @abstractmethod
     def headings(self, headers):
         raise NotImplementedError()
 
+    @abstractmethod
     def row(self, row_data):
         raise NotImplementedError()
 
