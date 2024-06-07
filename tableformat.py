@@ -64,6 +64,19 @@ class redirect_stdout:
         sys.stdout = self.stdout
 
 
+class ColumnFormatMixin:
+    formats = []
+
+    def row(self, row_data):
+        row_data = [(fmt % d) for fmt, d in zip(self.formats, row_data)]
+        super().row(row_data)
+
+
+class UpperHeaderMixin:
+    def headings(self, headers):
+        super().headings([h.upper() for h in headers])
+
+
 def create_formatter(type: str):
     format = {
         'html': HTMLTableFormatter,
