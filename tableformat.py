@@ -71,6 +71,8 @@ def create_formatter(type: str):
 
 
 def print_table(records, attributes, formatter):
+    if not isinstance(formatter, TableFormatter):
+        raise TypeError('Expected a TableFormatter')
     formatter.headings(attributes)
     for record in records:
         row_data = [getattr(record, attribute) for attribute in attributes]
