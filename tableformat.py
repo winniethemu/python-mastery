@@ -77,13 +77,26 @@ class UpperHeaderMixin:
         super().headings([h.upper() for h in headers])
 
 
-def create_formatter(type: str):
-    format = {
+def create_formatter(
+        name: str,
+        column_formats: list[str] = None,
+        upper_headers: bool = False):
+    type_map = {
         'html': HTMLTableFormatter,
         'text': TextTableFormatter,
         'csv': CSVTableFormatter,
     }
-    return format[type]()
+    formatter_class = type_map[name]
+
+    if column_formats:
+        class formatter_class(ColumnFormatMixin, formatter_class):
+            formats = column_formats
+
+    if upper_headers:
+        class formatter_class(UpperHeaderMixin, formatter_class):
+            pass
+
+    return formatter_class()
 
 
 def print_table(records, attributes, formatter):
