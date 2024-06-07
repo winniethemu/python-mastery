@@ -11,6 +11,9 @@ class Stock:
         self.shares = shares
         self.price = price
 
+    def __repr__(self):
+        return f'Stock(\'{self.name}\', {self.shares}, {self.price})'
+
     @property
     def shares(self):
         return self._shares
