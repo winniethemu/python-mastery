@@ -1,8 +1,4 @@
-def print_table(records, attributes, formatter):
-    formatter.headings(attributes)
-    for record in records:
-        row_data = [getattr(record, attribute) for attribute in attributes]
-        formatter.row(row_data)
+import sys
 
 
 class TableFormatter:
@@ -52,6 +48,19 @@ class HTMLTableFormatter(TableFormatter):
         return f'<{tag}>{content}</{tag}>'
 
 
+class redirect_stdout:
+    def __init__(self, out_file):
+        self.out_file = out_file
+
+    def __enter__(self):
+        self.stdout = sys.stdout
+        sys.stdout = self.out_file
+        return self.out_file
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        sys.stdout = self.stdout
+
+
 def create_formatter(type: str):
     format = {
         'html': HTMLTableFormatter,
@@ -59,3 +68,10 @@ def create_formatter(type: str):
         'csv': CSVTableFormatter,
     }
     return format[type]()
+
+
+def print_table(records, attributes, formatter):
+    formatter.headings(attributes)
+    for record in records:
+        row_data = [getattr(record, attribute) for attribute in attributes]
+        formatter.row(row_data)
